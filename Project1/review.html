@@ -1,0 +1,46 @@
+<div class="row">
+    <div class="col-md-12">
+        <h3>Review Assessment</h3>
+        <h4 data-ng-bind-html="assessment.title"></h4>
+        <h5>Scored {{assessment.score_earned}} out of {{assessment.score_max}}</h5>
+        <div data-ng-if="assessment.late_seconds" class="alert alert-danger" role="alert">
+            This assessment was submitted atleast {{assessment.late_seconds}} minutes late.
+            Late submissions are not counted, therefore scored zero.
+        </div>
+        <div data-ng-repeat="qanda in assessment.questions">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    Question
+                </div>
+                <div class="panel-body">
+                    <div id="question{{$index}}" data-ng-bind-html="qanda.question_text" data-compile=""></div>
+                    <hr/>
+                    <p><strong>Score</strong>: <span class="badge">{{qanda.score}}</span></p>
+                    <h5>Answer</h5>
+                    <div data-ng-if="qanda.type === 'MULTIPLECHOICE'">
+                        <div data-ng-repeat="ans in qanda.answers">
+                            <div data-ng-class="ans.correct">
+                                <div class="radio disabled">
+                                    <label>
+                                        <input type="radio" name="answers{{$parent.$index}}" id="ans{{$index}}"data-ng-checked="ans.correct" value="{{ans.value}}" data-ng-model="qanda.recordedAnswer" disabled>
+                                        <span id="ans{{$parent.$index + '_' + $index}}" data-ng-bind-html="ans.formatted" data-compile=""></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div data-ng-if="qanda.type === 'DECIMAL'">
+                        <div class="has-success"><strong>Correct Answer</strong>: {{qanda.correctAnswer}}</div>
+                        <p><strong>Min</strong>:{{qanda.answer_min}} <strong>Max</strong>: {{qanda.answer_max}} </p>
+                    </div>
+                    <div data-ng-if="qanda.type === 'INTEGER'">
+                        <div class="has-success"><strong>Correct Answer</strong>: {{qanda.correctAnswer}}</div>
+                    </div>
+                    <div data-ng-if="qanda.type === 'REGEX'">
+                        <p><strong>Regex</strong>: {{qanda.regex_accept}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

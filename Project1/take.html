@@ -1,0 +1,38 @@
+<div class="row">
+    <div class="col-md-12">
+        <h2>Taking Assessment</h2>
+        <div>
+            <h3 data-ng-bind-html="assessment.assessment_model.assessment_name"></h3>
+        </div>
+        <div class="alert alert-success" role="alert" data-ng-show="assessmentmsg" data-ng-bind-html="assessmentmsg"></div>
+        <div data-ng-if="assessment">
+            <timer countdown="time_remaining" interval="1000" autostart="true"></timer>
+            <form data-ng-submit="assessmentsubmit()">
+                <ol>
+                    <li data-ng-repeat="qanda in assessment.questions">
+                        <div id="question{{$index}}" data-ng-bind-html="qanda.question_text" data-compile=""></div>
+                        <div data-ng-if="qanda.type === 'MULTIPLECHOICE'">
+                            <div data-ng-repeat="ans in qanda.answers">
+                                <div data-ng-class="ans.correct">
+                                    <div class="radio" data-ng-class="(assessmentstatus === 'SUBMITTED') ? 'disabled' : ''">
+                                        <label>
+                                            <input type="radio" name="answers{{$parent.$index}}" id="ans{{$index}}" value="{{ans.value}}" data-ng-model="qanda.selectedans" data-ng-disabled="assessmentstatus === 'SUBMITTED'">
+                                            <span id="ans{{$parent.$index + '_' + $index}}" data-ng-bind-html="ans.formatted" data-compile=""></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div data-ng-if="qanda.type === 'DECIMAL'">
+                            <p>
+                                <input type="number" name="value" value="" class="form-control" step="any" required placeholder="Answer" data-ng-model="formData.value">
+                            </p>
+                        </div>
+                    </li>
+                </ol>
+                <input type="submit" class="btn btn-primary" value="Submit" data-ng-hide="assessmentstatus === 'SUBMITTED'">
+            </form>
+         </div>
+    </div>
+</div>
+<br/>

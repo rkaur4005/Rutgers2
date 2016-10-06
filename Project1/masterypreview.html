@@ -1,0 +1,37 @@
+<div class="row">
+    <div class="col-md-12">
+        <h2> Mastery Preview Assessment</h2>
+        <div data-ng-repeat="mastery in masteryassessment">
+            <div>
+                <h3 data-ng-bind-html="mastery.assessment_model.assessment_name"></h3>
+            </div>
+            <h4 data-ng-bind-html="mastery.title"></h4>
+            <p><strong>Max Score</strong>: <span class="badge">{{mastery.score_max}}</span></p>
+            <div data-ng-repeat="qanda in mastery.questions">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        Question
+                    </div>
+                    <div class="panel-body">
+                        <div id="question{{ $index}}" data-ng-bind-html="qanda.question_text" data-compile=""></div>
+                        <hr />
+                        <p><strong>Score</strong>: <span class="badge">{{qanda.score}}</span></p>
+                        <h5>Answer</h5>
+                        <div data-ng-if="qanda.type === 'MULTIPLECHOICE'">
+                            <div data-ng-repeat="ans in qanda.answers">
+                                <div data-ng-class="(ans.correct) ? 'has-success' : 'has-error'">
+                                    <div class="radio disabled ">
+                                        <label>
+                                            <input type="radio" name="answers{{$parent.$index}}" id="ans{{$index}}" data-ng-checked="ans.correct" value="{{ans.value}}" disabled>
+                                            <span  id="ans{{$parent.$index + '_' + $index}}" data-ng-bind-html="ans.formatted" data-compile=""></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

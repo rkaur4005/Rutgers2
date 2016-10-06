@@ -1,0 +1,100 @@
+<div id="question-picker-header model" class="modal-header">
+    <div class="row">
+        <div class="col-md-11">
+            <h3 class="modal-title">Questions Filter</h3>
+        </div>
+        <div class="col-md-1">
+            <button type="button" class="close"
+                    ng-click="cancelQuestionModel()">
+                <span aria-hidden="true">&times;</span>
+                <span class="sr-only">Close</span>
+            </button>
+        </div>
+    </div>
+
+    <div class="filterquestionarea">
+        <div class="row">
+            <div class="col-sm-6 col-sm-6 form-group">
+                <label class="control-label" for="assessment_type">Books:</label>
+                <select name="assessment_type" id="" class="form-control" required
+                        ng-options="option as option.title for option in configureoptions.books track by option.title" data-ng-model="filterconfig.book_name">
+                    <option value="">Please Select</option>
+                </select>
+            </div>
+
+            <div class="col-sm-6 col-sm-6 form-group" data-ng-if="filterconfig.book_name">
+                <label class="control-label" for="assessment_type">Chapters:</label>
+                <select name="assessment_type" id="assessment_type" class="form-control" required data-ng-model="filterconfig.chaptername"
+                        ng-options="option as option.chaptername for option in filterconfig.book_name.chapters track by option.chaptername">
+                    <option value="">Please Select</option>
+                </select>
+            </div>
+
+            <div class="col-sm-6 col-sm-6 form-group" data-ng-if="filterconfig.chaptername">
+                <label class="control-label" for="section_id">Sections:</label>
+                <select name="offer_mode" id="section_id" class="form-control" required data-ng-model="filterconfig.chaptersection_id" data-ng-change="getallquestions()"
+                        ng-options="option.chaptersection_id as option.section_name for option in filterconfig.chaptername.sections track by option.section_name">
+                    <option value="">Please Select</option>
+                </select>
+            </div>
+
+            <div class="col-sm-6 col-sm-6 form-group" data-ng-if="allQuestionArr.length">
+                <label class="control-label" for="question_filter">Question Type:</label>
+                <select name="offer_mode" id="question_filter" class="form-control" required data-ng-model="filterconfig.answer_type" data-ng-change="getallquestions()"
+                        ng-options="option as option for option in configureoptions.answer_type track by option">
+                    <option value="">Please Select</option>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6 col-sm-6 form-group" data-ng-if="allQuestionArr.length">
+                <label class="control-label" for="complexity_id">Complexity:</label>
+                <rzslider rz-slider-model="slidermindefault" id="complexity_id" rz-slider-on-change="sliderHasChanged()" rz-slider-high="slidermaxdefault" rz-slider-options="range_slider_ticks_values.options"></rzslider>
+            </div>
+            <div class="col-sm-6 col-sm-6 form-group" data-ng-if="allQuestionArr.length">
+                <label class="control-label" for="classfication_filter">Classification:</label><br><br>
+                <input type="checkbox" id="classfication_filter" ng-click="includeClassification('NUMERIC')"/> Numberical  &nbsp;&nbsp;&nbsp;<input type="checkbox" ng-click="includeClassification('CONCEPTUAL')"/>  Conceptual
+            </div>
+        </div>
+    </div>
+</div>
+<div id="question-picker-body" class="modal-body" ng-style="{height: modelheight}" style="overflow:auto;">
+    <div class="">
+        <div class="questionlistarea table-responsive">
+            <table class="table table-striped table-condensed">
+                <thead>
+                <tr>
+                    <th width="10%">Sec</th>
+                    <th width="55%">Questions</th>
+                    <th width="15%">Preview</th>
+                    <th width="5%">Type</th>
+                    <th width="5%">Comp</th>
+                    <th width="15%">Time</th>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr data-ng-repeat="question in allQuestionArr | filter: classficFilter | filter: complexityFilter | filter : filterconfig.answer_type">
+                        <td>
+                            <span data-ng-click="addQueSelArr($event, question)">
+                                <i class="fa" data-ng-class="question.selected ? 'fa-check-square-o' : 'fa-square-o'" aria-hidden="true"></i>
+                            </span>
+                        </td>
+                        <td>{{question.preview_text}}</td>
+                        <td><a ng-href="https://www-1.egyan.rutgers.edu/#/problem/practice/1/{{question.problemtemplate_id}}/0" target="_blank">Click Here</a></td>
+                        <td ng-if="question.answer_type == 'MULTIPLECHOICE'">MC</td>
+                        <td ng-if="question.answer_type == 'OPENANSWER'">OA</td>
+                        <td>{{question.complexity}}</td>
+                        <td><time>{{question.average_minutes}} Mins</time></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="text-center">
+                <h3 data-ng-if="!allQuestionArr.length">There is no questions please filter with Books.</h3>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" type="button" ng-click="addSelectedQuestions()">Add Questions</button>
+    <button class="btn btn-warning" type="button" ng-click="cancelQuestionModel()">Cancel</button>
+</div>

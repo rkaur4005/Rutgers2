@@ -1,0 +1,315 @@
+<div id="egyan-segment" class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <ul class="nav nav-tabs">
+                <li role="presentation" data-ng-class="{active: (assessmentshown === 'create')}"><a href="" data-ng-click="toggleasstab($event, 'create')">Create Assessment</a></li>
+                <li role="presentation" data-ng-class="{active: (assessmentshown === 'addseg')}"><a href="" data-ng-click="toggleasstab($event, 'addseg')">Add Segment</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="segment-container">
+                <form name="assesmentformdata" ng-submit="submitAssessmentObj()">
+                    <div id="create_assessment"  data-ng-show="assessmentshown === 'create'">
+                        <div class="row">
+                            <div class="col-sm-6 form-group" ng-class="{ 'has-error': assesmentformdata.assessment_type.$invalid && !assesmentformdata.assessment_type.$pristine}">
+                                <label class="control-label" for="assessment_type">Assessment type: {{createshown}}</label>
+                                <select name="assessment_type" id="assessment_type" class="form-control" required
+                                        ng-options="option for option in configureoptions.assessment_type track by option" data-ng-model="formdata.assessment_type">
+                                    <option value="">Please Select</option>
+                                </select>
+                                <p class="text-danger" ng-show="assesmentformdata.assessment_type.$invalid && !assesmentformdata.assessment_type.$pristine">Assessment type is required.</p>
+                            </div>
+                            <div class="col-sm-6 form-group" ng-class="{ 'has-error': assesmentformdata.offer_mode.$invalid && !assesmentformdata.offer_mode.$pristine}">
+                                <label class="control-label" for="offer_mode">Offer mode:</label>
+                                <select name="offer_mode" id="offer_mode" class="form-control" required
+                                        ng-options="option for option in configureoptions.offer_mode track by option"
+                                        data-ng-model="formdata.offer_mode">
+                                    <option value="">Please Select</option>
+                                </select>
+                                <p class="text-danger" ng-show="assesmentformdata.offer_mode.$invalid && !assesmentformdata.offer_mode.$pristine">Offer mode is required.</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6 form-group" ng-class="{ 'has-error': assesmentformdata.retak_policy.$invalid && !assesmentformdata.retak_policy.$pristine}">
+                                <label class="control-label" for="retake_policy">Retake policy:</label>
+                                <select name="retak_policy" id="retake_policy" class="form-control" required
+                                        ng-options="option for option in configureoptions.retake_policy track by option"
+                                        data-ng-model="formdata.retake_policy">
+                                    <option value="">Please Select</option>
+                                </select>
+                                <p class="text-danger" ng-show="assesmentformdata.retak_policy.$invalid && !assesmentformdata.retak_policy.$pristine">Retake Policy is required.</p>
+                            </div>
+                            <div class="col-sm-6 form-group" ng-class="{ 'has-error': assesmentformdata.validation_mode.$invalid && !assesmentformdata.validation_mode.$pristine}">
+                                <label class="control-label" for="validation_mode">Validation mode:</label>
+                                <select name="validation_mode" id="validation_mode" class="form-control" required
+                                        ng-options="option for option in configureoptions.validation_mode track by option"
+                                        data-ng-model="formdata.validation_mode">
+                                    <option value="">Please Select</option>
+                                </select>
+                                <p class="text-danger" ng-show="assesmentformdata.validation_mode.$invalid && !assesmentformdata.validation_mode.$pristine">Validation mode is required.</p>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-6 form-group"  ng-class="{ 'has-error': assesmentformdata.assessment_name.$invalid && !assesmentformdata.assessment_name.$pristine}">
+                                <label class="control-label" for="assessment_name">Assessment Name:</label>
+                                <input type="text"  class="form-control" placeholder="Please enter assessment name" name="assessment_name" id="assessment_name" required data-ng-model="formdata.assessment_name">
+                                <p class="text-danger" ng-show="assesmentformdata.assessment_name.$invalid && !assesmentformdata.assessment_name.$pristine">Assessment Name is required.</p>
+                            </div>
+                            <div class="col-sm-6 form-group" ng-class="{ 'has-error': assesmentformdata.duratio_minutes.$invalid && !assesmentformdata.duratio_minutes.$pristine}">
+                                <label class="control-label" for="duratio_minutes">Duration:</label>
+                                <input type="number"  class="form-control" placeholder="30 Minutes" name="duratio_minutes" id="duratio_minutes" required data-ng-model="formdata.duration_minutes">
+                                <p class="text-danger" ng-show="assesmentformdata.duratio_minutes.$invalid && !assesmentformdata.duratio_minutes.$pristine">Assessment Name is required.</p>
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <label class="control-label">Duration:</label>
+                            </div>
+                            <div class="col-sm-6">
+                            <div class="row">
+                                <div class="col-lg-4 date-picker-padd">
+                                    <label for="" class="control-label">Start Date And Time</label>
+                                    <div class="input-group" ng-class="{ 'has-error': assesmentformdata.open_date_assessment.$invalid && !assesmentformdata.open_date_assessment.$pristine}">
+                                        <input type="text" class="form-control" id="" name="open_date_assessment" uib-datepicker-popup="yyyy/MM/dd"  data-ng-model="formdata.open_date" is-open="popup1.opened" ng-required="true"  />
+                                            <span class="input-group-btn">
+                                                <button type="button" ng-class="{ 'has-error': assesmentformdata.open_date_assessment.$invalid && !assesmentformdata.open_date_assessment.$pristine}" class="btn btn-default" ng-click="popup1.opened = !popup1.opened"><i class="glyphicon glyphicon-calendar"></i></button>
+                                            </span>
+                                    </div>
+                                    <p class="text-danger" ng-show="assesmentformdata.open_date_assessment.$invalid && !assesmentformdata.open_date_assessment.$pristine">Start date is required.</p>
+                                </div>
+                                <div class="col-lg-8">
+                                    <uib-timepicker  ng-model="formdata.open_datetime" ng-change="changed()" name="open_datetime_assessment" hour-step="1" minute-step="15" required ng-class="{ 'has-error': assesmentformdata.open_datetime_assessment.$invalid && !assesmentformdata.open_datetime_assessment.$pristine}"></uib-timepicker>
+                                    <p class="text-danger" ng-show="assesmentformdata.open_datetime_assessment.$invalid && !assesmentformdata.open_datetime_assessment.$pristine">Open Time is required.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="row">
+                                <div class="col-lg-4 date-picker-padd">
+                                    <label class="control-label">End Date And Time</label>
+                                    <div class="input-group" ng-class="{ 'has-error': assesmentformdata.close_date_assessment.$invalid && !assesmentformdata.close_date_assessment.$pristine}">
+                                        <input type="text" name="close_date_assessment"  class="form-control" uib-datepicker-popup="yyyy/MM/dd"  data-ng-model="formdata.close_date" is-open="popup2.opened" ng-required="true"  />
+                                            <span class="input-group-btn">
+                                                <button type="button" class="btn btn-default" ng-click="popup2.opened = !popup2.opened"><i class="glyphicon glyphicon-calendar"></i></button>
+                                            </span>
+                                    </div>
+                                    <p class="text-danger" ng-show="assesmentformdata.close_date_assessment.$invalid && !assesmentformdata.close_date_assessment.$pristine">Close date is required.</p>
+                                </div>
+                                <div class="col-lg-8">
+                                    <uib-timepicker  name="close_datetime_assessment"  ng-model="formdata.close_datetime" ng-change="changed()" hour-step="1" minute-step="15"  ng-class="{ 'has-error': assesmentformdata.close_datetime_assessment.$invalid && !assesmentformdata.close_datetime_assessment.$pristine}"></uib-timepicker>
+                                    <p class="text-danger" ng-show="assesmentformdata.close_datetime_assessment.$invalid && !assesmentformdata.close_datetime_assessment.$pristine">Close Time is required.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                        <div class="row">
+                            <div class="col-sm-6 form-group">
+                                <label for="self_efficacy">Self efficacy:</label>
+                                <input type="checkbox" name="self_efficacy" id="self_efficacy" class= "checkbox checkbox-inline" data-ng-model="formdata.self_efficacy">
+                            </div>
+                        </div>
+
+                        <div class="row segment-classsec">
+                            <div data-ng-repeat="classsecid in configureoptions.classsections">
+                                <div class="col-sm-6 form-group" ng-init="formdata.classsections[$index].classsection_id = classsecid.classsection_id">
+                                    <label class="control-label">Class Section</label>
+                                    <uib-accordion close-others="oneAtATime">
+                                        <uib-accordion-group is-open="status.open">
+                                            <uib-accordion-heading>
+                                                {{classsecid.classsection_registrar_id}} <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+                                            </uib-accordion-heading>
+                                            <div class="row">
+                                                <div class="col-sm-12 col-md-12">
+                                                    <div class="row">
+                                                        <div class="col-lg-4">
+                                                            <label class="control-label">Start Date And Time</label>
+                                                            <div class="input-group date-picker-padd">
+                                                                <input type="text" class="form-control" uib-datepicker-popup="yyyy/MM/dd"  data-ng-model="formdata.classsections[$index].open_date_override" is-open="classsecid.startpopup_opened"  />
+                                                                <span class="input-group-btn">
+                                                                    <button type="button" class="btn btn-default" ng-click="classsecid.startpopup_opened = !classsecid.startpopup_opened"><i class="glyphicon glyphicon-calendar"></i></button>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-8">
+                                                            <uib-timepicker  ng-model="formdata.classsections[$index].open_date_override_datetime" ng-change="changed()" hour-step="1" minute-step="15" ></uib-timepicker>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-12 col-md-12">
+                                                    <div class="row">
+                                                        <div class="col-lg-4">
+                                                            <label class="control-label">End Date And Time</label>
+                                                            <div class="input-group date-picker-padd">
+                                                                <input type="text" class="form-control" uib-datepicker-popup="yyyy/MM/dd"  data-ng-model="formdata.classsections[$index].close_date_override" is-open="classsecid.endpopup_opened" />
+                                                                <span class="input-group-btn">
+                                                                    <button type="button" class="btn btn-default" ng-click="classsecid.endpopup_opened = !classsecid.endpopup_opened"><i class="glyphicon glyphicon-calendar"></i></button>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-8">
+                                                            <uib-timepicker  ng-model="formdata.classsections[$index].close_date_override_datetime" ng-change="changed()" hour-step="1" minute-step="15" ></uib-timepicker>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </uib-accordion-group>
+                                    </uib-accordion>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-12 form-group">
+                                <div class="btn-group pull-right">
+                                    <button class="btn btn-info" data-ng-click="toggleasstab($event, 'addseg')" id="nexttab" type="button"> Next  <i class="fa fa-angle-double-right" aria-hidden="true"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="add_assessment" data-ng-show="assessmentshown === 'addseg'">
+                        <div class="segmentlist card"  data-ng-repeat="segment in formdata.segments">
+                            <div class="row" ng-init="outerIndex = $index">
+                                <div class="col-md-11">
+                                    <h3>{{segment.segment_Name}}</h3>
+                                </div>
+                                <div class="col-md-1 text-right">
+                                    <i class="fa  fa-2x" ng-click="segment.isCollapsed = !segment.isCollapsed" ng-class="segment.isCollapsed ? 'fa-plus-square-o' : 'fa-minus-square-o'"> </i>
+                                </div>
+                            </div>
+                            <div data-ng-hide="segment.isCollapsed">
+                                <div class="row">
+                                    <div class="col-sm-6 form-group" ng-class="{ 'has-error': assesmentformdata.segments_position_{{$index}}.$invalid && !assesmentformdata.segments_position_{{$index}}.$pristine}">
+                                        <label class="control-label" for="segments_position_{{$index}}">Segment Position:</label>
+                                        <div class="row">
+                                            <div class="col-md-10">
+                                                <input type="text"  class="form-control" placeholder="Please enter segmentposition" name="segments_position_{{$index}}" id="segments_position_{{$index}}" required data-ng-model="segment.segment_position">
+                                                <p class="text-danger" ng-show="assesmentformdata.segments_position_{{$index}}.$invalid && !assesmentformdata.segments_position_{{$index}}.$pristine">Segment Position is required.</p>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <button type="button" data-ng-click="setPosSeg($index , segment.segment_position)" class="btn btn-primary">Set</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 form-group" ng-class="{ 'has-error': assesmentformdata.questions_score_{{$index}}.$invalid && !assesmentformdata.questions_score_{{$index}}.$pristine}">
+                                        <label class="control-label" for="questions_score_{{$index}}">Question Score:</label>
+                                        <input type="number"  class="form-control" placeholder="Enter Question Score" name="questions_score_{{$index}}" id="questions_score_{{$index}}" required data-ng-model="segment.question_score">
+                                        <p class="text-danger" ng-show="assesmentformdata.questions_score_{{$index}}.$invalid && !assesmentformdata.questions_score_{{$index}}.$pristine">Question Score is required.</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-6 form-group" ng-class="{ 'has-error': assesmentformdata.selections_count_{{$index}}.$invalid && !assesmentformdata.selections_count_{{$index}}.$pristine}">
+                                        <label class="control-label" for="selections_count_{{$index}}">Selection Count:</label>
+                                        <input type="number" class="form-control" placeholder="Please enter selection count" name="selections_count_{{$index}}" id="selections_count_{{$index}}" required data-ng-model="segment.selection_count">
+                                        <p class="text-danger" ng-show="assesmentformdata.selections_count_{{$index}}.$invalid && !assesmentformdata.selections_count_{{$index}}.$pristine">Segment Count is required.</p>
+                                    </div>
+                                    <div class="col-sm-6 form-group" ng-class="{ 'has-error': assesmentformdata.questions_order_{{$index}}.$invalid && !assesmentformdata.questions_order_{{$index}}.$pristine}">
+                                        <label class="control-label" for="questions_order_{{$index}}">Question Order:</label>
+                                        <select name="questions_order_{{$index}}" id="questions_order_{{$index}}" class="form-control" required data-ng-model="segment.question_order"
+                                                ng-options="option for option in configureoptions.question_order track by option" >
+                                            <option value="">Please select</option>
+                                        </select>
+                                        <p class="text-danger" ng-show="assesmentformdata.questions_order_{{$index}}.$invalid && !assesmentformdata.questions_order_{{$index}}.$pristine">Segment Count is required.</p>
+                                    </div>
+                                </div>
+
+                                <div class="row segment-classsec">
+                                    <label class="control-label question_label" data-ng-if="segment.questions.length">Questions</label>
+                                    <div data-ng-repeat="question in segment.questions">
+                                        <div class="col-sm-6 form-group" ng-init="question.question_id = question.problemtemplate_id">
+                                            <uib-accordion close-others="oneAtATime">
+                                                <uib-accordion-group is-open="status.open">
+                                                    <uib-accordion-heading>
+                                                        {{question.preview_text}} <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+                                                    </uib-accordion-heading>
+                                                    <div class="row">
+                                                        <div class="col-sm-12 col-md-12">
+                                                            <div class="row">
+                                                                <div class="col-lg-4">
+                                                                    <label class="control-label">Start Date And Time</label>
+                                                                    <div class="input-group date-picker-padd">
+                                                                        <input type="text" class="form-control" uib-datepicker-popup="yyyy/MM/dd"  data-ng-model="question.included_from" is-open="question.popstartopen"  />
+                                                                    <span class="input-group-btn">
+                                                                        <button type="button" class="btn btn-default" ng-click="question.popstartopen = !question.popstartopen"><i class="glyphicon glyphicon-calendar"></i></button>
+                                                                    </span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-lg-8">
+                                                                    <uib-timepicker  ng-model="question.included_from_datetime" ng-change="changed()" hour-step="1" minute-step="15" ></uib-timepicker>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-12 col-md-12">
+                                                            <div class="row">
+                                                                <div class="col-lg-4">
+                                                                    <label class="control-label">End Date And Time</label>
+                                                                    <div class="input-group date-picker-padd" >
+                                                                        <input type="text" class="form-control" uib-datepicker-popup="yyyy/MM/dd"  data-ng-model="question.excluded_from" is-open="question.popendopen"  />
+                                                                    <span class="input-group-btn">
+                                                                        <button type="button" class="btn btn-default" ng-click="question.popendopen = !question.popendopen"><i class="glyphicon glyphicon-calendar"></i></button>
+                                                                    </span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-lg-8">
+                                                                    <uib-timepicker  ng-model="question.excluded_from_datetime" ng-change="changed()" hour-step="1" minute-step="15" ></uib-timepicker>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-sm-6 form-group">
+                                                            <label class="control-label" for="question_source_{{question.problemtemplate_id}}_{{$index}}">Question Source:</label>
+                                                            <select name="question_source_{{question.problemtemplate_id}}_{{$index}}" id="question_source_{{question.problemtemplate_id}}_{{$index}}" class="form-control" ng-disabled="true" ng-init="question.question_source = 'PTE'"  required data-ng-model="question.question_source"
+                                                                    ng-options="option for option in configureoptions.question_source track by option">
+                                                                <option value="">Please select</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-sm-6 form-group" ng-class="{ 'has-error': assesmentformdata.question_position_{{outerIndex}}_{{$index}}.$invalid && !assesmentformdata.question_position_{{outerIndex}}_{{$index}}.$pristine}">
+                                                            <label class="control-label" for="question_position_{{outerIndex}}_{{$index}}">Question Position: </label>
+                                                            <div class="row">
+                                                                <div class="col-md-8" ng-init="question.question_position = question.question_position || $index +1">
+                                                                    <input type="text" required class="form-control" placeholder="Please enter Question Position" name="question_position_{{outerIndex}}_{{$index}}" id="question_position_{{outerIndex}}_{{$index}}"  data-ng-model="question.question_position">
+                                                                    <p class="text-danger" ng-show="assesmentformdata.question_position_{{outerIndex}}_{{$index}}.$invalid && !assesmentformdata.question_position_{{outerIndex}}_{{$index}}.$pristine">Segment Count is required.</p>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <button type="button" data-ng-click="setPosQuestion($index , question.question_position, outerIndex)" class="btn btn-primary">Set</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </uib-accordion-group>
+                                            </uib-accordion>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-6">
+                                        <button type="button" class="btn btn-primary pull-left" data-ng-click="modalButtonClick($index)">Add Questions</button>
+                                    </div>
+                                    <div class="col-md-6 col-sm-6" data-ng-if="segment.segment_Name != 'Segment Number 1'">
+                                        <button type="button" class="btn btn-danger pull-right" data-ng-click="removeSegment($event, $index)">Remove Segments</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-md-6 col-sm-6">
+                                <button type="button" class="btn btn-primary" data-ng-click="addSegment($event)">Add Segment</button>
+                            </div>
+                            <div class="col-md-6 col-sm-6">
+                                <button type="submit" class="btn btn-primary btn-info">Submit Assessment</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
